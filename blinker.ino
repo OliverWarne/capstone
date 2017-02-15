@@ -28,7 +28,8 @@ time_t my_time;
 #define WAKEUPPERIOD 10
 
 // seconds - how long should it stay asleep
-#define SLEEPTIME 28800
+// 28800 - 8 hours
+#define SLEEPTIME 40
 
 unsigned int  state      = 0;
 time_t wait_time  = 0;
@@ -93,6 +94,7 @@ void loop() {
       break;
       
     case 4: // begin the long wait; sleepytime
+      loop_count = 0;
       Serial.print("case: ");
       Serial.println(state);
       digitalWrite(LED_BUILTIN, LOW);
@@ -108,7 +110,7 @@ void loop() {
       time_t cur_time = rtc.get();
       Serial.print("Sleeping for ");
       Serial.print(sleep_time - cur_time);
-      Serial.println("longer");
+      Serial.println(" seconds longer");
       if(cur_time >= sleep_time) {
         state = 0;
       };
